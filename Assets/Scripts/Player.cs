@@ -147,7 +147,7 @@ public class Player : MonoBehaviour
         //  c. Player 회전값 갱신(Update)
     }
 
-    // Player를 이동
+    #region (Legary) pLayer Movement CC컴포넌트 없이 진행
     void Movement()
     {
         // 4. 언제?
@@ -164,4 +164,5 @@ public class Player : MonoBehaviour
         // Goal : 이동시킨다
         // 속도 : 방향 * 속력력
     }
+    #endregion (Legary) pLayer Movement CC컴포넌트 없이 진행
 }
