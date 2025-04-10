@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
 {
     // Move Speed (이동속력)
     
-    private float moveSpeed = 10.0f;
+    public float moveSpeed = 10.0f;
     // 누적 방향 값 (좌/우, 상/하)
     private float mX, mY;
     // - 민감도
