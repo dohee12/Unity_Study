@@ -19,11 +19,14 @@ public class Bullet : MonoBehaviour
     // Timer
     private float timer = 0.0f;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         // bullet(나자신)에게 붙어있는 Rd 값을 할당 (=초기화)
-        rb = gameObject.GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
+    }
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void OnEnable()
+    {
         // 할당한 이후에 총알이 앞으로 움직인다
         MoveToForward();
     }
@@ -50,7 +53,7 @@ public class Bullet : MonoBehaviour
         rb.angularVelocity = Vector3.zero; // 회전 속도 초기화
         // 2. 탄창에 다시 집어넣기
         // 2-1. 탄창이 어디??
-        GameObject player = GameObject.Find("player");
+        GameObject player = GameObject.Find("Player");
         Gun gun = player.GetComponentInChildren<Gun>();
         // 2-2. 탄창에 다시 추가
         gun.bulletList.Add(gameObject);
@@ -78,11 +81,17 @@ public class Bullet : MonoBehaviour
         bool compareTag = other.gameObject.CompareTag("Enemy");
         // 4. 특정 Layer를 가지고 있는 경우
         bool compareLayer = other.gameObject.layer == LayerMask.NameToLayer("Enemy");
+
+        
         if (compareTag){
             // -> 파괴(Enemy)
             Destroy(other.gameObject);
-
         }
+
+        // +총알 이펙트
+        // +파괴 이펙트
+        // +효과음음
+
         // 파괴 (자기 자신- 총알)
         Destroy(gameObject);
     }

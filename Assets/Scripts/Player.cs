@@ -22,6 +22,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     // Move Speed (이동속력)
+    [SerializeField]
     
     public float moveSpeed = 10.0f;
     // 누적 방향 값 (좌/우, 상/하)
