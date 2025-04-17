@@ -19,12 +19,13 @@ public class Bullet : MonoBehaviour
     // Timer
     private float timer = 0.0f;
 
+    // Unity 실행 시 가장 먼저 실행되는 Lifecycle 함수 (onEnable, start보다 먼저저)
     void Awake()
     {
         // bullet(나자신)에게 붙어있는 Rd 값을 할당 (=초기화)
         rb = GetComponent<Rigidbody>();
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    // GameObject가 활성화될 때마다 실행되는 Lifecycle 함수
     void OnEnable()
     {
         // 할당한 이후에 총알이 앞으로 움직인다
@@ -39,25 +40,27 @@ public class Bullet : MonoBehaviour
         // 1. 일정시간(lifeTime)이 지난 경우
         if (timer > lifeTime){
             // Goal. 총알이 파괴
-            KillMySelf();
+            DeactiveMySelf();
         }
         
     }
     // 일정 시간이 지나면 파괴 (=탄창에 넣기)
-    void KillMySelf() {
-        // 탄창에 넣기
-        // 1. 비활성화시키기
-        gameObject.SetActive(false);
+    void DeactiveMySelf() {
+        // 1. 탄창에 넣기 전에, 상태 초기화화
         // + Rigidbody 물리연산 초기화
         rb.linearVelocity = Vector3.zero; // 속도 초기화
         rb.angularVelocity = Vector3.zero; // 회전 속도 초기화
+        // + Timer 초기화
+        timer = 0f; // 타이머 초기화
+
         // 2. 탄창에 다시 집어넣기
         // 2-1. 탄창이 어디??
         GameObject player = GameObject.Find("Player");
+        // player.transform.Find("Gun").gameObject;
+        // player.transform.GetChild("Gun").GetComponent<Gun>();
         Gun gun = player.GetComponentInChildren<Gun>();
-        // 2-2. 탄창에 다시 추가
-        gun.bulletList.Add(gameObject);
-
+        // 2-2. 탄창에 집어넣기
+        gun.DeactiveBullet(gameObject);
     }
 
     // RB를 활용하여 총알의 Z축방향으로 힘을 가해 날아가게한다.

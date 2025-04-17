@@ -16,9 +16,9 @@ public class Gun : MonoBehaviour
     // - 총알(Bullet) 공장 (설계도[Prefab] 필요)
     public GameObject bulletFactory;
     // - ObjectPooling: 탄창 원본 (array)
-    public GameObject[] bulletPool;
+    private GameObject[] bulletPool;
     // - ObjectPooling: 탄창 (list)
-    public List<GameObject> bulletList;
+    private List<GameObject> bulletList;
     // - ObjectPooling: 탄창 크기
     public int bulletPoolSize = 10;
     
@@ -88,5 +88,14 @@ public class Gun : MonoBehaviour
         bulletList[0].SetActive(true); // 총알 활성화
         // 5 탄창에서 방금 사용한 첫 번째 총알 제거
         bulletList.RemoveAt(0); // 탄창에서 방금 사용한 총알 제거
+    }
+
+    // 탄창에 총알 넣기 (= 총알 비활성화)
+    // - 총알 (이미 발사된 총알)
+    public void DeactiveBullet(GameObject bullet) {
+        // 1. 총알 비활성화
+        bullet.SetActive(false); // 총알 비활성화
+        // 2. 총알을 탄창에 넣기기
+        bulletList.Add(bullet); // 탄창에 다시 추가
     }
 }
