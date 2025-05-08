@@ -47,10 +47,13 @@ public class Player : MonoBehaviour
     public float JumpPower = 3.0f;
 
     // Player의 점프 가능 횟수
-    public int jumpCount = 0;
+    private int jumpCount = 0;
 
     // Player의 점프 가능 최대 횟수
     public int maxJumpCount = 2;
+    // catching
+    public Transform playerTransfrom;
+    public Transform faceTransfrom;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() // 한번만 실행행
@@ -129,7 +132,8 @@ public class Player : MonoBehaviour
         mY = Mathf.Clamp(mY, -limitAngle, limitAngle);
         // 3. 특정GameObject(카메라) 회전
         // * 문제 : 위아래 회전 방향이 마우스방향과 반대
-        face.transform.localEulerAngles = new Vector3 (-mY,0,0);
+        // 해결 : -1을 곱해주어서 반대방향이 되도록 설정정
+        faceTransfrom.localEulerAngles = new Vector3 (-mY,0,0);
     }
 
 
@@ -142,7 +146,7 @@ public class Player : MonoBehaviour
         //  L: -1, R: +1 * 마우스 민감도 (회전속력)
         mX = mX + h * sensitivity * Time.deltaTime;
         // 3. 회전시킨다
-        transform.localEulerAngles = new Vector3 (0,mX,0);
+        playerTransfrom.localEulerAngles = new Vector3 (0,mX,0);
         //  a. Player 회전값 가져오기
         //  b. 입력 누적값 반영
         //  c. Player 회전값 갱신(Update)
@@ -161,9 +165,9 @@ public class Player : MonoBehaviour
         // 2. 어느 방향으로?
         Vector3 direction = new Vector3(h,0,v);
         // 1. 어느정도의 빠르기로?
-        transform.Translate(direction * moveSpeed * Time.deltaTime);
+        // 속도 : 방향 * 속력 
+        playerTransfrom.Translate(direction * moveSpeed * Time.deltaTime);
         // Goal : 이동시킨다
-        // 속도 : 방향 * 속력력
     }
     #endregion (Legary) pLayer Movement CC컴포넌트 없이 진행
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 // Goal : 앞으로(z축) 날아가서, 무언가에 충돌
-// - 방향 (direction)
+// - 방향 (direction) : z축(forward)
 // - 속력 (speed)
 // - 충돌 : 실체 (collider) + 물리연산적용(rigidbody)
 //  L 어딘가에 부딪히면 파괴(자기자신을 파괴)
@@ -28,7 +28,7 @@ public class Bullet : MonoBehaviour
     // GameObject가 활성화될 때마다 실행되는 Lifecycle 함수
     void OnEnable()
     {
-        // 할당한 이후에 총알이 앞으로 움직인다
+        // (할당된 이후에) 총알이 앞으로 움직인다
         MoveToForward();
     }
 
@@ -39,19 +39,19 @@ public class Bullet : MonoBehaviour
         timer += Time.deltaTime;
         // 1. 일정시간(lifeTime)이 지난 경우
         if (timer > lifeTime){
-            // Goal. 총알이 파괴
+            // Goal. 총알(=자기 자신) 파괴
             DeactiveMySelf();
         }
         
     }
-    // 일정 시간이 지나면 파괴 (=탄창에 넣기)
+    // 일정 시간이 지나면 파괴(=탄창에 넣기)
     void DeactiveMySelf() {
-        // 1. 탄창에 넣기 전에, 상태 초기화화
-        // + Rigidbody 물리연산 초기화
+        // 1. 탄창에 넣기 전에, 상태 Reset
+        // + Rigidbody 물리연산 초기화(Reset)
         rb.linearVelocity = Vector3.zero; // 속도 초기화
         rb.angularVelocity = Vector3.zero; // 회전 속도 초기화
-        // + Timer 초기화
-        timer = 0f; // 타이머 초기화
+        // + Timer 초기화(Reset)
+        timer = 0f;
 
         // 2. 탄창에 다시 집어넣기
         // 2-1. 탄창이 어디??
