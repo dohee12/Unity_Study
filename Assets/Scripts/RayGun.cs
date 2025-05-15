@@ -25,6 +25,7 @@ public class RayGun : MonoBehaviour
     public float fireRate = 10.0f;
     // 다음 발사 시간
     private float nextTimeToFire;
+    public int damage = 1;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -69,7 +70,7 @@ public class RayGun : MonoBehaviour
 
             // 충돌한 물체가 피격 가능한 물체라면?
             // -> IDamage라고 interface를 사용하는 GameObject/Component라면
-            if(hitInfo.collider.GetComponent<IDamage>() != null){
+            if(hitInfo.collider.GetComponent<IDmage>() != null){
                 // A.충돌한 물체를 '파괴'
                 // Destroy(hitInfo.collider.gameObject);
 
@@ -79,7 +80,7 @@ public class RayGun : MonoBehaviour
                 Enemy enemy = enemyObj.GetComponent<Enemy>();
                 // 어떤 HP?
                 // - HP를 -1씩 감소
-                enemy.HP--;
+                enemy.Damaged(damage);
                 // - HP가 0이되면 .. 파괴
                 if(enemy.HP < 1){
                     Destroy(hitInfo.collider.gameObject);
